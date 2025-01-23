@@ -20,4 +20,4 @@ jobs:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
         run: |
           export GHCR_TOKEN=$GHCR_TOKEN
-          bash ./build_push_image_karsajobs_ui.sh
+          bash ./build_push_image_karsajobs-ui.sh
