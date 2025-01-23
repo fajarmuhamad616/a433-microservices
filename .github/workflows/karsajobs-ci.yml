@@ -7,7 +7,7 @@ jobs:
   karsajobs-ci:
     name: Checkout-Lint-Test-Build-Push
     environment: karsajobs-prod
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Running checkout repo
         uses: actions/checkout@v4
