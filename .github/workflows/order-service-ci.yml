@@ -1,0 +1,23 @@
+name: order-service
+on:
+  push:
+    branches:
+      - order-service
+jobs:
+  order-service-ci:
+    name: Checkout-Lint-Test-Build-Push
+    environment: order-service-prod
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Running checkout repo
+        uses: actions/checkout@v4
+      - name: Running lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: "Dockerfile"
+      - name: Running build and push Docker Image
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          export GHCR_TOKEN=$GHCR_TOKEN
+          bash ./build_push_image_order_service.sh

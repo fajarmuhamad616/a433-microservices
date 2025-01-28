@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  order-service:
+    image: ghcr.io/fajarmuhamad616/order-service:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - rabbitmq-service
+    networks:
+      - rabbitmq-network
+    restart: always
+    environment:
+      AMQP_URL: "amqp://guest:guest@rabbitmq-server:5672"
+  
+  rabbitmq-service:
+    image: rabbitmq:3.11-management
+    container_name: 'rabbitmq-server'
+    ports:
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - ~/.docker/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker/rabbitmq/log/:/var/log/rabbitmq/
+    networks:
+      - rabbitmq-network
+networks:
+  rabbitmq-network:
+    driver: bridge
