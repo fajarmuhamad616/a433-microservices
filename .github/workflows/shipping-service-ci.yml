@@ -1,0 +1,23 @@
+name: shipping-service
+on:
+  push:
+    branches:
+      - shipping-service
+jobs:
+  shipping-service-ci:
+    name: Checkout-Lint-Test-Build-Push
+    environment: shipping-service-prod
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Running checkout repo
+        uses: actions/checkout@v4
+      - name: Running lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: "Dockerfile"
+      - name: Running build and push Docker Image
+        env:
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          export GHCR_TOKEN=$GHCR_TOKEN
+          bash ./build_push_image_shipping_service.sh
